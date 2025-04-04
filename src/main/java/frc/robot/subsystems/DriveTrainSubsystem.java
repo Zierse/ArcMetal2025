@@ -12,6 +12,7 @@ import frc.robot.Constants.TracaoDriveContants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
 
+    public static final String movimentaRobo = null;
     private final SparkMax motorSuperiorDireitoLider = new SparkMax(TracaoDriveContants.MOTOR_SUPERIOR_DIREITO, MotorType.kBrushless);
     private final SparkMax motorInferiorDireitoSeguidor = new SparkMax(TracaoDriveContants.MOTOR_INFERIOR_DIREITO, MotorType.kBrushless);
 
@@ -33,19 +34,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
         configMotorDireitoLider
                 .inverted(true)
-                .idleMode(IdleMode.kCoast);
+                .idleMode(IdleMode.kCoast).openLoopRampRate(0.25);
 
         configMotorEsquerdoLider
-                .inverted(true)
-                .idleMode(IdleMode.kCoast);
+                .inverted(false)
+                .idleMode(IdleMode.kCoast).openLoopRampRate(0.25);
 
         configMotorEsquerdoSeg
                 .inverted(false)
-                .idleMode(IdleMode.kBrake);
+                .idleMode(IdleMode.kBrake).openLoopRampRate(0.25);
 
         configMotorDireitoSeg
-                .inverted(false)
-                .idleMode(IdleMode.kBrake);
+                .inverted(true)
+                .idleMode(IdleMode.kBrake).openLoopRampRate(0.25);
 
         motorSuperiorEsquerdoLider.configure(configMotorEsquerdoLider, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         motorInferiorEsquerdoSeg.configure(configMotorEsquerdoSeg, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);

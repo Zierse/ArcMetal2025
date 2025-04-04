@@ -4,28 +4,36 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ElevadorCommand;
+import frc.robot.commands.ElevadorCommand;
+import frc.robot.subsystems.DriveTrainSubsystem;
 
 
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  private Command autonomousCommand;
 
-  private ElevadorCommand m_elevadorCommand;
+  private RobotContainer robotContainer;
 
-  private final RobotContainer m_robotContainer;
+  private ElevadorCommand m_elevadorCommand = new ElevadorCommand();
+
+  private DriveTrainSubsystem m_DriveTrainSubsystem;
+
 
   final CommandXboxController driveController = new CommandXboxController(0);
 
+
   public Robot() {
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
 
-    m_elevadorCommand.motorElevador.getEncoder().setPosition(0);
-
+   ElevadorCommand.motorElevador.getEncoder().setPosition(0);
+    ElevadorCommand.motorGarraGiro.getEncoder().setPosition(0);
 
   }
 
@@ -33,8 +41,8 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
 
-    SmartDashboard.putNumber("ENCODER:", m_elevadorCommand.motorElevador.getEncoder().getPosition());
-
+   SmartDashboard.putNumber("Encoder Elevador:", ElevadorCommand.motorElevador.getEncoder().getPosition());
+   SmartDashboard.putNumber("Encoder Garra:", ElevadorCommand.motorGarraGiro.getEncoder().getPosition());
 
   }
 
@@ -49,28 +57,38 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    if (robotContainer != null) {
+      autonomousCommand = robotContainer.getAutonomousCommand();
+      if (autonomousCommand != null) {
+          System.out.println("Executando modo autonomo: " + autonomousCommand.getName());
+          autonomousCommand.schedule();
+      } else {
+          System.out.println("Nenhum comando autonomo foi selecionado.");
+      }
+  } else {
+      System.out.println("robotContainer é nulo!");
+  }
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+
+  }
 
   @Override
   public void autonomousExit() {}
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+  }
 
   @Override
   public void teleopExit() {}

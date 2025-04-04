@@ -26,13 +26,12 @@ public class RolloSubsystem extends SubsystemBase {
         // voltage dips. The current limit helps prevent breaker trips or burning out
         // the motor in the event the roller stalls.
         SparkMaxConfig rollerConfig = new SparkMaxConfig();
-        rollerConfig.voltageCompensation(Rollo_Constants.ROLLER_MOTOR_VOLTAGE_COMP);
         rollerConfig.smartCurrentLimit(Rollo_Constants.ROLLER_MOTOR_CURRENT_LIMIT);
         rollerConfig.idleMode(IdleMode.kBrake);
         spk6RolloSnow.configure(rollerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
     public void runRollo(double speed) {
-        spk6RolloSnow.set(0);
+        spk6RolloSnow.set(speed);
     }
 }

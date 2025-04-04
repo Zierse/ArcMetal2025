@@ -14,13 +14,11 @@ public class ArmSubsystem extends SubsystemBase {
 
     public static SparkMax armMotor;
 
-    /**
-     * This subsytem that controls the arm.
-     */
+
     public ArmSubsystem() {
 
         // Set up the arm motor as a brushed motor
-        armMotor = new SparkMax(ArmConstants.ARM_MOTOR_ID, MotorType.kBrushed);
+        armMotor = new SparkMax(ArmConstants.ARM_MOTOR_ID, MotorType.kBrushless);
 
 
 
@@ -34,10 +32,11 @@ public class ArmSubsystem extends SubsystemBase {
         // voltage dips. The current limit helps prevent breaker trips or burning out
         // the motor in the event the arm stalls.
         SparkMaxConfig armConfig = new SparkMaxConfig();
-        armConfig.voltageCompensation(10);
         armConfig.smartCurrentLimit(ArmConstants.ARM_MOTOR_CURRENT_LIMIT);
         armConfig.idleMode(IdleMode.kBrake);
+        armConfig.inverted(true);
         armMotor.configure(armConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        armMotor.getEncoder().setPosition(0);
     }
 
     @Override
@@ -51,6 +50,10 @@ public class ArmSubsystem extends SubsystemBase {
      * @param speed motor speed from -1.0 to 1, with 0 stopping it
      */
     public void runArm(double speed) {
+        if(armMotor.getEncoder().getPosition() <= 0 && speed <0){
+            armMotor.set(0);
+            return;
+        }
         armMotor.set(speed);
     }
 }

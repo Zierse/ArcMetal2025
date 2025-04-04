@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 public class Constants {
     
     public static final class TracaoDriveContants{
@@ -10,7 +12,7 @@ public class Constants {
         public static final int MOTOR_SUPERIOR_ESQUERDO = 4;
 
         public static final double SLOW_MODE_GIRO = 0.6;
-        public static final double SLOW_MODE_VELOCIDADE = 0.5;
+        public static final double SLOW_MODE_VELOCIDADE = 0.8;
     }
 
     public static final class IO_Constants {
@@ -18,8 +20,8 @@ public class Constants {
         public static final int JOYSTICK_PORT_DRIVE = 0;
         public static final int JOYSTICK_PORT_OPERATOR = 1;
 
-        public static final int AXIS_GATILHO_ESQUERDO = 3;
-        public static final int AXIS_GATILHO_DIREITO = 4;
+        public static final int AXIS_GATILHO_ESQUERDO = 2;
+        public static final int AXIS_GATILHO_DIREITO = 3;
         public static final int AXIS_ANALOG_ESQUERDO = 0;
     }
 
@@ -56,6 +58,14 @@ public class Constants {
 
     public static final class ElevadorConstants {
         public static final int ELEVADOR_MOTOR_ID = 5;
+    }
+
+    public static final class GARRAConstants{
+        public static final int GARRAGIRO_MOTOR_ID = 10;
+        public static final int GARRASNOW_ID = 7;
+        public static SparkMaxConfig configGARRA = new SparkMaxConfig();
+        public static SparkMaxConfig configGARRASNOW = new SparkMaxConfig();
+    
 
     }
 
