@@ -1,7 +1,5 @@
 package frc.robot;
 
-import com.revrobotics.spark.config.SparkMaxConfig;
-
 public class Constants {
     
     public static final class TracaoDriveContants{
@@ -59,15 +57,4 @@ public class Constants {
     public static final class ElevadorConstants {
         public static final int ELEVADOR_MOTOR_ID = 5;
     }
-
-    public static final class GARRAConstants{
-        public static final int GARRAGIRO_MOTOR_ID = 10;
-        public static final int GARRASNOW_ID = 7;
-        public static SparkMaxConfig configGARRA = new SparkMaxConfig();
-        public static SparkMaxConfig configGARRASNOW = new SparkMaxConfig();
-    
-
-    }
-
-    
 }

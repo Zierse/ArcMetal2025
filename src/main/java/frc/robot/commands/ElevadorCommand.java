@@ -10,11 +10,9 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ElevadorConstants;
-import frc.robot.Constants.GARRAConstants;
 
 public class ElevadorCommand extends Command {
 
-    public final static SparkMax motorGarraGiro = new SparkMax(GARRAConstants.GARRAGIRO_MOTOR_ID, MotorType.kBrushless);
 
     public final static SparkMax motorElevador = new SparkMax(ElevadorConstants.ELEVADOR_MOTOR_ID,
             MotorType.kBrushless);
