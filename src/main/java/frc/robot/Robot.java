@@ -4,16 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.commands.ElevadorCommand;
-import frc.robot.commands.ElevadorCommand;
-import frc.robot.subsystems.DriveTrainSubsystem;
 
 
 public class Robot extends TimedRobot {
@@ -21,19 +16,13 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robotContainer;
 
-  private ElevadorCommand m_elevadorCommand = new ElevadorCommand();
-
-  private DriveTrainSubsystem m_DriveTrainSubsystem;
-
-
-  final CommandXboxController driveController = new CommandXboxController(0);
+  // private ElevadorCommand m_elevadorCommand = new ElevadorCommand();
 
 
   public Robot() {
     robotContainer = new RobotContainer();
 
-   ElevadorCommand.motorElevador.getEncoder().setPosition(0);
-    ElevadorCommand.motorGarraGiro.getEncoder().setPosition(0);
+  ElevadorCommand.motorElevador.getEncoder().setPosition(0);
 
   }
 
@@ -41,8 +30,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
 
-   SmartDashboard.putNumber("Encoder Elevador:", ElevadorCommand.motorElevador.getEncoder().getPosition());
-   SmartDashboard.putNumber("Encoder Garra:", ElevadorCommand.motorGarraGiro.getEncoder().getPosition());
+  SmartDashboard.putNumber("Encoder Elevador:", ElevadorCommand.motorElevador.getEncoder().getPosition());
 
   }
 

@@ -4,43 +4,28 @@
 
 package frc.robot;
 
-// import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-// import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IO_Constants;
 import frc.robot.autos.AutonomoRank;
-// import frc.robot.commands.AlgieInCommand;
-// import frc.robot.commands.AlgieOutCommand;
-// import frc.robot.commands.CoralOutCommand;
-// import frc.robot.commands.CoralStackCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ElevadorCommand;
-//import frc.robot.commands.ElevadorCommand;
 import frc.robot.subsystems.ArmSubsystem;
-//import frc.robot.commands.ElevadorCommand;
 import frc.robot.subsystems.DriveTrainSubsystem;
-import frc.robot.subsystems.GarraSub;
 import frc.robot.subsystems.RolloSubsystem;
 
 public class RobotContainer {
 
-  SendableChooser<Command> m_escolherAutonomo = new SendableChooser<>();
+  final SendableChooser<Command> m_escolherAutonomo = new SendableChooser<>();
 
   public final DriveTrainSubsystem m_driveSubsystem = new DriveTrainSubsystem();
   public final RolloSubsystem m_roller = new RolloSubsystem();
   public final ArmSubsystem m_arm = new ArmSubsystem();
   public final AutonomoRank m_autonomoRank = new AutonomoRank(m_driveSubsystem, m_roller);
-
-  private final GarraSub m_GarraSub = new GarraSub();
-
-
-  
   
   private final CommandXboxController m_JoystickOperador = new CommandXboxController(IO_Constants.JOYSTICK_PORT_OPERATOR);
 
@@ -68,9 +53,9 @@ public class RobotContainer {
 
     // controleDirecao.R1().onTrue(new CoralOutCommand(m_roller));
 
-    controleDirecao.povUp().whileTrue(Commands.runEnd(() -> m_arm.runArm(0.1), () -> m_arm.runArm(0), m_arm));
+    controleDirecao.povUp().whileTrue(Commands.runEnd(() -> m_arm.runArm(-0.1), () -> m_arm.runArm(0), m_arm));
 
-    controleDirecao.povDown().whileTrue(Commands.runEnd(() -> m_arm.runArm(-0.1), () -> m_arm.runArm(0), m_arm));
+    controleDirecao.povDown().whileTrue(Commands.runEnd(() -> m_arm.runArm(0.1), () -> m_arm.runArm(0), m_arm));
 
     controleDirecao.leftBumper().whileTrue(Commands.runEnd(() -> m_roller.runRollo(1), () -> m_roller.runRollo(0),  m_roller));
 
@@ -80,33 +65,15 @@ public class RobotContainer {
 //CONTROLE ELEVADOR LOGITECH
 
 
-    // m_JoystickOperador.start().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-0))); //PONTO ZERO ELEVADOR
+    m_JoystickOperador.start().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-0))); //PONTO ZERO ELEVADOR
 
-    // m_JoystickOperador.a().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-50))); //COLETA CORAL STATION
+    m_JoystickOperador.a().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-50))); //COLETA CORAL STATION
 
-    // m_JoystickOperador.b().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-45))); //L2 RECIFE
+    m_JoystickOperador.b().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-45))); //L2 RECIFE
 
-    // m_JoystickOperador.x().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-125))); //L3 RECIFE
+    m_JoystickOperador.x().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-125))); //L3 RECIFE
 
-    // m_JoystickOperador.y().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-235))); // L4 RECIFE
-
-    
-    // m_JoystickOperador.back().onTrue(new InstantCommand(()-> ElevadorCommand.setPositionGarra(0)));
-
-    // m_JoystickOperador.povUp().onTrue(new InstantCommand(()-> ElevadorCommand.setPositionGarra(-4.71)));
-
-    // m_JoystickOperador.povDown().onTrue(new InstantCommand(()-> ElevadorCommand.setPositionGarra(-17.5)));
-
-    // m_JoystickOperador.povLeft().onTrue(new InstantCommand(()-> ElevadorCommand.setPositionGarra(-4.21)));
-
-    // m_JoystickOperador.povRight().onTrue(new InstantCommand(()-> ElevadorCommand.setPositionGarra(-4.50)));
-
-    // m_JoystickOperador.rightBumper().whileTrue(Commands.runEnd(() -> GarraSub.startSnow(1), () -> GarraSub.startSnow(0),  m_GarraSub));
-
-    // m_JoystickOperador.leftBumper().whileTrue(Commands.runEnd(() -> GarraSub.startSnow(-1), () -> GarraSub.startSnow(0),  m_GarraSub));
-
-    
-
+    m_JoystickOperador.y().onTrue(new InstantCommand(()-> ElevadorCommand.setPosition(-235))); // L4 RECIFE    
 
     //RB CHUTA CORAL DO FUNIL
 

@@ -11,8 +11,8 @@ public class Constants {
         public static final int MOTOR_INFERIOR_ESQUERDO = 3;
         public static final int MOTOR_SUPERIOR_ESQUERDO = 4;
 
-        public static final double SLOW_MODE_GIRO = 0.6;
-        public static final double SLOW_MODE_VELOCIDADE = 0.8;
+        public static final double SLOW_MODE_GIRO = 0.5;
+        public static final double SLOW_MODE_VELOCIDADE = 0.5;
     }
 
     public static final class IO_Constants {
