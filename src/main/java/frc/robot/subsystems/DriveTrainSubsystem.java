@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -7,10 +8,12 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TracaoDriveContants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
+
 
     public static final String movimentaRobo = null;
     private final SparkMax motorSuperiorDireitoLider = new SparkMax(TracaoDriveContants.MOTOR_SUPERIOR_DIREITO, MotorType.kBrushless);
@@ -19,8 +22,12 @@ public class DriveTrainSubsystem extends SubsystemBase {
     private final SparkMax motorSuperiorEsquerdoLider = new SparkMax(TracaoDriveContants.MOTOR_SUPERIOR_ESQUERDO, MotorType.kBrushless);
     private final SparkMax motorInferiorEsquerdoSeg = new SparkMax(TracaoDriveContants.MOTOR_INFERIOR_ESQUERDO, MotorType.kBrushless);
 
+    private final Pigeon2 giroscopio = new Pigeon2(TracaoDriveContants.gyroPigeon);
+
+    
     public DriveTrainSubsystem() {
 
+        giroscopio.reset();
         motorSuperiorDireitoLider.setCANTimeout(250);
         motorInferiorDireitoSeguidor.setCANTimeout(250);
 
@@ -34,19 +41,19 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
         configMotorDireitoLider
                 .inverted(true)
-                .idleMode(IdleMode.kCoast).openLoopRampRate(0.25);
+                .idleMode(IdleMode.kCoast).openLoopRampRate(0.30);
 
         configMotorEsquerdoLider
                 .inverted(false)
-                .idleMode(IdleMode.kCoast).openLoopRampRate(0.25);
+                .idleMode(IdleMode.kCoast).openLoopRampRate(0.30);
 
         configMotorEsquerdoSeg
                 .inverted(false)
-                .idleMode(IdleMode.kBrake).openLoopRampRate(0.25);
+                .idleMode(IdleMode.kBrake).openLoopRampRate(0.30);
 
         configMotorDireitoSeg
                 .inverted(true)
-                .idleMode(IdleMode.kBrake).openLoopRampRate(0.25);
+                .idleMode(IdleMode.kBrake).openLoopRampRate(0.30);
 
         motorSuperiorEsquerdoLider.configure(configMotorEsquerdoLider, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         motorInferiorEsquerdoSeg.configure(configMotorEsquerdoSeg, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -63,9 +70,24 @@ public class DriveTrainSubsystem extends SubsystemBase {
         motorInferiorDireitoSeguidor.set(FrenteTras - EsqueraDireita);
     }
 
+    public void resetarPigeon(){
+        giroscopio.reset();
+    }
+
+    public double readPigeon(){
+        return giroscopio.getAngle();
+    }
     public void stop(){
         motorSuperiorEsquerdoLider.set(0);
         motorSuperiorDireitoLider.set(0);
+    }
+
+    public void resetarEncoder(){
+        motorSuperiorDireitoLider.getEncoder().setPosition(0);
+    }
+
+    public double readEncoder(){
+        return motorSuperiorDireitoLider.getEncoder().getPosition();
     }
 
 }
