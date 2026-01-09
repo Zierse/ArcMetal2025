@@ -8,7 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-// import frc.robot.commands.ElevadorCommand;
+import frc.robot.Constants.SensorConstants;
+import frc.robot.commands.ElevadorCommand;
 
 
 public class Robot extends TimedRobot {
@@ -16,13 +17,16 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robotContainer;
 
-  // private ElevadorCommand m_elevadorCommand = new ElevadorCommand();
+  private ElevadorCommand m_elevadorCommand = new ElevadorCommand();
 
 
   public Robot() {
     robotContainer = new RobotContainer();
 
-  // ElevadorCommand.motorElevador.getEncoder().setPosition(0);
+  ElevadorCommand.motorElevador.getEncoder().setPosition(0);
+
+  System.out.println("PH ID" + SensorConstants.PNEUMATIC_CHANNEL);
+  System.out.println("Led R channel" + Constants.LEDConstants.LED_R);
 
   }
 
@@ -31,7 +35,11 @@ public class Robot extends TimedRobot {
 
   CommandScheduler.getInstance().run();
 
-  // SmartDashboard.putNumber("Encoder Elevador:", ElevadorCommand.motorElevador.getEncoder().getPosition());
+  SmartDashboard.putNumber("Encoder Elevador:", ElevadorCommand.motorElevador.getEncoder().getPosition());
+
+  // SmartDashboard.putBoolean("Sensor IF",.get());
+
+  
 
   }
 

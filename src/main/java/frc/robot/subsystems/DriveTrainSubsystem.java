@@ -1,6 +1,8 @@
+
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -8,8 +10,9 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.TracaoDriveContants;
 
 public class DriveTrainSubsystem extends SubsystemBase {
@@ -24,7 +27,9 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     private final Pigeon2 giroscopio = new Pigeon2(TracaoDriveContants.gyroPigeon);
 
-    
+    private final RelativeEncoder encoderDireito = motorSuperiorDireitoLider.getEncoder();
+    private final RelativeEncoder encoderEsquerdo = motorSuperiorEsquerdoLider.getEncoder();
+
     public DriveTrainSubsystem() {
 
         giroscopio.reset();
@@ -84,10 +89,28 @@ public class DriveTrainSubsystem extends SubsystemBase {
 
     public void resetarEncoder(){
         motorSuperiorDireitoLider.getEncoder().setPosition(0);
+        motorInferiorDireitoSeguidor.getEncoder().setPosition(0);
+
+        motorSuperiorEsquerdoLider.getEncoder().setPosition(0);
+        motorInferiorEsquerdoSeg.getEncoder().setPosition(0);
+    }
+
+    public double rotToMeters(double rot){
+        return rot / TracaoDriveContants.GEAR_RATIO * Math.abs(TracaoDriveContants.PERIMETRO); 
     }
 
     public double readEncoder(){
-        return motorSuperiorDireitoLider.getEncoder().getPosition();
+        return (encoderDireito.getPosition() + encoderEsquerdo.getPosition()) / 2.0;
     }
 
+    public double getAverageDistance(){
+        return (rotToMeters(encoderDireito.getPosition()) + rotToMeters(encoderEsquerdo.getPosition())) / 2.0;
+    }
+
+    @Override
+    public void periodic(){
+        SmartDashboard.putNumber("Encoder Direito", encoderDireito.getPosition());
+        SmartDashboard.putNumber("Encoder Esquerdo", encoderEsquerdo.getPosition());
+        SmartDashboard.putNumber("Distancia em Metros", getAverageDistance());
+    }
 }
